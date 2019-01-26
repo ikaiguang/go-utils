@@ -1,1 +1,1 @@
-package go_utils
+package goutils
