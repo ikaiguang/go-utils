@@ -2,14 +2,11 @@ package goerror
 
 import (
 	"fmt"
-	"net/http"
 	"runtime"
 )
 
-// OK : http StatusOK(package net/http)
-// HTTP status codes as registered with IANA.
-// See: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
-const OK = http.StatusOK
+// OK : ok
+const OK = 0
 
 // Status : defines a logical error model
 type Status struct {
@@ -60,7 +57,7 @@ func NewWithError(code int, msg string, err error, customCallerSkip ...int) erro
 	oldStatus, ok := FromError(err)
 	if ok {
 		newStatus.Caller += oldStatus.Error()
-	} else{
+	} else {
 		newStatus.Caller += "\n~~~~~ ~~~~~ ~~~~~\nerror : \n\t" + err.Error()
 	}
 
