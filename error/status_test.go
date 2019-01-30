@@ -8,6 +8,8 @@ import (
 func TestNew(t *testing.T) {
 	err := New(http.StatusNotFound, http.StatusText(http.StatusNotFound))
 
+	t.Log(err.Error())
+
 	t.Log(err)
 }
 
@@ -15,6 +17,8 @@ func TestNewWithError(t *testing.T) {
 	oldErr := New(http.StatusNotFound, http.StatusText(http.StatusNotFound))
 
 	newErr := NewWithError(http.StatusInternalServerError, http.StatusText(http.StatusInternalServerError), oldErr)
+
+	t.Log(newErr.Error())
 
 	t.Log(newErr)
 

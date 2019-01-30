@@ -21,13 +21,23 @@ type Status struct {
 
 // Error : error implementation
 func (s *Status) Error() string {
+	return fmt.Sprintf("code :%d \n message : %s", s.Code, s.Message)
+}
+
+// Format Formatter
+func (s *Status) Format(fmtState fmt.State, verb rune) {
+	fmt.Println(s.Detail())
+}
+
+// Detail error detail inof
+func (s *Status) Detail() string {
 	printFormat := `
 ~~~~~ ~~~~~ ~~~~~
 error :
 	code : %d
 	message : %s
-	caller : %s`
-
+	caller : %s
+`
 	return fmt.Sprintf(printFormat, s.Code, s.Message, s.Caller)
 }
 
@@ -58,13 +68,12 @@ func newStatus(code int, msg string, customCallerSkip ...int) *Status {
 func NewWithError(code int, msg string, err error, customCallerSkip ...int) error {
 	newStatus := newStatus(code, msg, customCallerSkip...)
 
-	oldStatus, ok := FromError(err)
-	if ok {
-		newStatus.Caller += oldStatus.Error()
+	errStatus, errStatusOK := FromError(err)
+	if errStatusOK {
+		newStatus.Caller += errStatus.Detail()
 	} else {
 		newStatus.Caller += "\n~~~~~ ~~~~~ ~~~~~\nerror : \n\t" + err.Error()
 	}
-
 	return newStatus
 }
 
