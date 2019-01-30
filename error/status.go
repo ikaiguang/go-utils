@@ -16,12 +16,12 @@ const (
 type Status struct {
 	Code    int    `json:"code"`    // HTTP status codes
 	Message string `json:"message"` // message
-	Caller  string `json:"caller"`  // caller
+	Caller  string `json:"-"`       // caller
 }
 
 // Error : error implementation
 func (s *Status) Error() string {
-	return fmt.Sprintf("code :%d \n message : %s", s.Code, s.Message)
+	return fmt.Sprintf("code(%d) %s", s.Code, s.Message)
 }
 
 // Format Formatter
