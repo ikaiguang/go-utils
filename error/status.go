@@ -5,8 +5,12 @@ import (
 	"runtime"
 )
 
-// OK : ok
-const OK = 0
+// error code
+const (
+	OK       = 0 // success code
+	Canceled = 1 // cancel code
+	Unknown  = 2 // unknown code
+)
 
 // Status : defines a logical error model
 type Status struct {
