@@ -26,7 +26,7 @@ func (s *Status) Error() string {
 
 // Format Formatter
 func (s *Status) Format(fmtState fmt.State, verb rune) {
-	fmt.Println(s.Detail())
+	fmtState.Write([]byte(s.Detail()))
 }
 
 // Detail error detail inof
