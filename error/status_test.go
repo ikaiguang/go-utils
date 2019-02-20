@@ -38,3 +38,15 @@ func TestFromError(t *testing.T) {
 	}
 	t.Logf("\n%v", err)
 }
+
+func TestForward(t *testing.T) {
+	err := tNew()
+
+	newErr := Forward(err)
+
+	t.Logf("\n%v", newErr)
+}
+
+func tNew() error {
+	return New(http.StatusInternalServerError, http.StatusText(http.StatusInternalServerError))
+}

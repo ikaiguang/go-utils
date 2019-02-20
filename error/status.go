@@ -60,21 +60,30 @@ func newStatus(code int, msg string, customCallerSkip ...int) *Status {
 	return &Status{
 		Code:    code,
 		Message: msg,
-		Caller:  fmt.Sprintf("%s \n\t\t %s:%d", runtime.FuncForPC(pc).Name(), file, line),
+		Caller:  callerFormat(pc, file, line),
 	}
+}
+
+// callerFormat call format
+func callerFormat(pc uintptr, file string, line int) string {
+	return fmt.Sprintf("%s \n\t\t %s:%d", runtime.FuncForPC(pc).Name(), file, line)
 }
 
 // NewWithError error over error
 func NewWithError(code int, msg string, err error, customCallerSkip ...int) error {
 	newStatus := newStatus(code, msg, customCallerSkip...)
 
-	errStatus, errStatusOK := FromError(err)
-	if errStatusOK {
-		newStatus.Caller += errStatus.Detail()
+	if s, ok := FromError(err); ok {
+		newStatus.Caller += s.Detail()
 	} else {
-		newStatus.Caller += "\n~~~~~ ~~~~~ ~~~~~\nerror : \n\t" + err.Error()
+		newStatus.Caller += stdErrFormat(err)
 	}
 	return newStatus
+}
+
+// stdErrFormat standard error format
+func stdErrFormat(err error) string {
+	return "\n~~~~~ ~~~~~ ~~~~~\nerror : \n\t" + err.Error()
 }
 
 // FromError returns a Status representing err if it was produced from this package,
@@ -87,4 +96,17 @@ func FromError(err error) (*Status, bool) {
 		return status, true
 	}
 	return nil, false
+}
+
+// Forward forward error
+func Forward(err error) error {
+	newStatus := newStatus(Unknown, err.Error())
+
+	if s, ok := FromError(err); ok {
+		newStatus.Code = s.Code
+		newStatus.Caller += s.Detail()
+	} else {
+		newStatus.Caller += stdErrFormat(err)
+	}
+	return newStatus
 }
