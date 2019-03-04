@@ -25,7 +25,7 @@ func IsEmail(fixedTelephone string) bool {
 
 // IsValidUsername : username
 func IsValidUsername(username string) bool {
-	usernameReg := `^[a-zA-Z0-9_-]{1,60}$`
+	usernameReg := `^[a-zA-Z][a-zA-Z0-9_-]{0,16}$`
 
 	return regexp.MustCompile(usernameReg).MatchString(username)
 }
