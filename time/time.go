@@ -19,29 +19,49 @@ func now() time.Time {
 	return time.Now()
 }
 
+// ToDay 2019-08-21 22:07:07 -> 2019-08-21 00:00:00
+func ToDay(t time.Time) time.Time {
+	return time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
+}
+
+// ToHour 2019-08-21 22:07:07 -> 2019-08-21 22:00:00
+func ToHour(t time.Time) time.Time {
+	return time.Date(t.Year(), t.Month(), t.Day(), t.Hour(), 0, 0, 0, t.Location())
+}
+
+// ToMinute 2019-08-21 22:07:07 -> 2019-08-21 22:07:00
+func ToMinute(t time.Time) time.Time {
+	return time.Date(t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), 0, 0, t.Location())
+}
+
+// ThisMonth 2019-08-21 22:07:07 -> 2019-08-01 00:00:00
+func ThisMonth(t time.Time) time.Time {
+	return time.Date(t.Year(), t.Month(), 1, 0, 0, 0, 0, t.Location())
+}
+
+// ThisYear 2019-08-21 22:07:07 -> 2019-01-01 00:00:00
+func ThisYear(t time.Time) time.Time {
+	return time.Date(t.Year(), 1, 1, 0, 0, 0, 0, t.Location())
+}
+
+// TimestampToTime timestamp to Time
+func TimestampToTime(u int64) time.Time {
+	return time.Unix(u, 0)
+}
+
+// DateToTime date to time
+func DateToTime(format, date string) (time.Time, error) {
+	return time.ParseInLocation(format, date, time.Local)
+}
+
+// TimestampToDate timestamp to date
+func TimestampToDate(u int64, format string) string {
+	return time.Unix(u, 0).Format(format)
+}
+
 // FormatSecond to YmdHms
 func FormatSecond(t time.Time) string {
 	return t.Format(YmdHms)
-}
-
-// FormatMinute to YmdHm
-func FormatMinute(t time.Time) string {
-	return t.Format(YmdHm)
-}
-
-// FormatHour to YmdH
-func FormatHour(t time.Time) string {
-	return t.Format(YmdH)
-}
-
-// FormatDay to Ymd
-func FormatDay(t time.Time) string {
-	return t.Format(Ymd)
-}
-
-// FormatMonth to Ym
-func FormatMonth(t time.Time) string {
-	return t.Format(Ym)
 }
 
 // FormatRFC3339 to RFC3339

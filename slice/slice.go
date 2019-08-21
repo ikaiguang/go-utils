@@ -1,6 +1,8 @@
 package goslice
 
-import "reflect"
+import (
+	"reflect"
+)
 
 // Reverse reverse slice
 // panic if s is not a slice

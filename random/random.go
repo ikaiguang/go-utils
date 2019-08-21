@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// Strings : A-Z a-z
+// Strings : A-Z a-z 0-9
 func Strings(size int) string {
 
 	rand.Seed(time.Now().UnixNano())
@@ -23,7 +23,7 @@ func Strings(size int) string {
 			// a-z
 			res[i] = byte(rand.Intn(26) + 97)
 		} else {
-			// 1-9
+			// 0-9
 			res[i] = byte(rand.Intn(9) + 48)
 		}
 	}
