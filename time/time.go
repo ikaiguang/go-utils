@@ -21,22 +21,30 @@ func now() time.Time {
 
 // ToDay 2019-08-21 22:07:07 -> 2019-08-21 00:00:00
 func ToDay(t time.Time) time.Time {
-	return time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
+	y, m, d := t.Date()
+
+	return time.Date(y, m, d, 0, 0, 0, 0, t.Location())
 }
 
 // ToHour 2019-08-21 22:07:07 -> 2019-08-21 22:00:00
 func ToHour(t time.Time) time.Time {
-	return time.Date(t.Year(), t.Month(), t.Day(), t.Hour(), 0, 0, 0, t.Location())
+	y, m, d := t.Date()
+
+	return time.Date(y, m, d, t.Hour(), 0, 0, 0, t.Location())
 }
 
 // ToMinute 2019-08-21 22:07:07 -> 2019-08-21 22:07:00
 func ToMinute(t time.Time) time.Time {
-	return time.Date(t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), 0, 0, t.Location())
+	y, m, d := t.Date()
+
+	return time.Date(y, m, d, t.Hour(), t.Minute(), 0, 0, t.Location())
 }
 
 // ThisMonth 2019-08-21 22:07:07 -> 2019-08-01 00:00:00
 func ThisMonth(t time.Time) time.Time {
-	return time.Date(t.Year(), t.Month(), 1, 0, 0, 0, 0, t.Location())
+	y, m, _ := t.Date()
+
+	return time.Date(y, m, 1, 0, 0, 0, 0, t.Location())
 }
 
 // ThisYear 2019-08-21 22:07:07 -> 2019-01-01 00:00:00
