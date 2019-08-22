@@ -17,7 +17,7 @@ func HasField(s interface{}, fieldName string) (bool, error) {
 	}
 
 	if sValue.Kind() != reflect.Struct {
-		return false, fmt.Errorf("model isnot struct")
+		return false, fmt.Errorf("bad request parameters : s isnot struct")
 	}
 	return sValue.FieldByName(fieldName).IsValid(), nil
 }
