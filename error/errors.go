@@ -101,11 +101,11 @@ func (w *withStack) Format(s fmt.State, verb rune) {
 	}
 }
 
-// Warp returns an error annotating err with a stack trace
+// Wrap returns an error annotating err with a stack trace
 // at the point Wrap is called, and the supplied message.
 // If err is nil, Wrap returns nil.
 // if Cause(err).(*fundamental) is ok, forward err with stack
-func Warp(err error, code int, message string) error {
+func Wrap(err error, code int, message string) error {
 	if err == nil {
 		return nil
 	}
