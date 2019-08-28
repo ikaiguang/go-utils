@@ -122,7 +122,8 @@ func Wrap(err error, code int, message string) error {
 			status: &Status{Code: code, Msg: message},
 			stack:  callers(),
 		},
-		msg: err.Error(),
+		err: err,
+		//msg: err.Error(),
 	}
 	return &withStack{
 		err,
@@ -132,7 +133,8 @@ func Wrap(err error, code int, message string) error {
 
 type withMessage struct {
 	cause error
-	msg   string
+	err   error
+	//msg   string
 }
 
 func (w *withMessage) Error() string { return w.cause.Error() }
@@ -142,7 +144,8 @@ func (w *withMessage) Format(s fmt.State, verb rune) {
 	case 'v':
 		if s.Flag('+') {
 			fmt.Fprintf(s, "%+v\n", w.Cause())
-			io.WriteString(s, w.msg)
+			fmt.Fprintf(s, "%+v\n", w.err)
+			//io.WriteString(s, w.msg)
 			return
 		}
 		fallthrough
