@@ -20,14 +20,14 @@ func FromError(err error) (*Status, bool) {
 // New also records the stack trace at the point it was called.
 func New(code int, message string) error {
 	return &fundamental{
-		status: &Status{Code: code, Msg: message},
+		status: &Status{Code: code, Message: message},
 		stack:  callers(),
 	}
 }
 
 type Status struct {
-	Code int    `json:"code"`
-	Msg  string `json:"message"`
+	Code    int    `json:"code"`
+	Message string `json:"message"`
 }
 
 func (s *Status) Error() string { b, _ := json.Marshal(s); return string(b) }
@@ -119,7 +119,7 @@ func Wrap(err error, code int, message string) error {
 	// new error
 	err = &withMessage{
 		cause: &fundamental{
-			status: &Status{Code: code, Msg: message},
+			status: &Status{Code: code, Message: message},
 			stack:  callers(),
 		},
 		err: err,
