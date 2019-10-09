@@ -1,4 +1,3 @@
-// from github.com/pkg/errors
 package goerror
 
 import (
@@ -7,18 +6,21 @@ import (
 	"path"
 	"runtime"
 	"strings"
+	"sync"
 )
 
 // default
 var (
-	maxRuntimeCaller = 1 // custom runtime callers
+	maxRuntimeCaller      int        // custom runtime callers
+	maxRuntimeCallerMutex sync.Mutex // lock
 )
 
-// MaxRuntimeCaller set runtime.callers pc
-// MaxRuntimeCaller default 1
-// MaxRuntimeCaller 0 = all callers
-func MaxRuntimeCaller(i int) {
-	maxRuntimeCaller = i
+// SetMaxCallers set runtime.callers pc
+func SetMaxCallers(callers int) {
+	maxRuntimeCallerMutex.Lock()
+	defer maxRuntimeCallerMutex.Unlock()
+
+	maxRuntimeCaller = callers
 }
 
 func callers() *stack {
@@ -31,14 +33,6 @@ func callers() *stack {
 	}
 	var st stack = pcs[0:n]
 	return &st
-}
-
-// funcname removes the path prefix component of a function's name reported by func.Name().
-func funcname(name string) string {
-	i := strings.LastIndex(name, "/")
-	name = name[i+1:]
-	i = strings.Index(name, ".")
-	return name[i+1:]
 }
 
 // Frame represents a program counter inside a stack frame.
@@ -161,4 +155,20 @@ func (s *stack) StackTrace() StackTrace {
 		f[i] = Frame((*s)[i])
 	}
 	return f
+}
+
+//func callers() *stack {
+//	const depth = 32
+//	var pcs [depth]uintptr
+//	n := runtime.Callers(3, pcs[:])
+//	var st stack = pcs[0:n]
+//	return &st
+//}
+
+// funcname removes the path prefix component of a function's name reported by func.Name().
+func funcname(name string) string {
+	i := strings.LastIndex(name, "/")
+	name = name[i+1:]
+	i = strings.Index(name, ".")
+	return name[i+1:]
 }
