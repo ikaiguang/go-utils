@@ -5,6 +5,11 @@ import (
 	"io"
 )
 
+// status code
+const (
+	OK = 0
+)
+
 // Err returns an error from Status
 func Err(code int32, message string) error {
 	return &Status{
@@ -27,12 +32,12 @@ func Errf(code int32, format string, args ...interface{}) error {
 // Otherwise, ok is false and a Status is returned with code(0) and the original error message.
 func FromErr(err error) (s *Status, ok bool) {
 	if err == nil {
-		return &Status{Code: 0, Message: err.Error(), stack: callers()}, true
+		return &Status{Code: OK, Message: err.Error(), stack: callers()}, true
 	}
 	if s, ok := Cause(err).(*Status); ok {
 		return s, true
 	}
-	return &Status{Code: 0, Message: err.Error(), stack: callers()}, false
+	return &Status{Code: OK, Message: err.Error(), stack: callers()}, false
 }
 
 // Status error
