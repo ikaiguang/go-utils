@@ -1,6 +1,6 @@
-# go-error
+# go-struct
 
-base on github.com/pkg/errors
+struct utils
 
 ## dev environment
 

@@ -1,6 +1,6 @@
-# go-error
+# go-slice
 
-base on github.com/pkg/errors
+slice utils
 
 ## dev environment
 

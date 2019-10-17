@@ -39,3 +39,18 @@
 
 # config
 *.env
+
+# cert
+config/cert
+
+# attachment
+attachment/images
+attachment/videos
+attachment/files
+
+# doc
+document/docs-api
+document/docs-web
+
+# tmp
+/tmp/

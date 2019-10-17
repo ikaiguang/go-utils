@@ -1,6 +1,6 @@
-# go-error
+# go-runtime
 
-base on github.com/pkg/errors
+runtime utils
 
 ## dev environment
 

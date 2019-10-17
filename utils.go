@@ -1,6 +1,8 @@
 package goutils
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func GolangUtils() {
 	fmt.Println("golang utils")

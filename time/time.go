@@ -19,6 +19,13 @@ func now() time.Time {
 	return time.Now()
 }
 
+// Today today
+func Today() time.Time {
+	t := time.Now()
+
+	return time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
+}
+
 // ToDay 2019-08-21 22:07:07 -> 2019-08-21 00:00:00
 func ToDay(t time.Time) time.Time {
 	y, m, d := t.Date()
@@ -57,19 +64,14 @@ func TimestampToTime(u int64) time.Time {
 	return time.Unix(u, 0)
 }
 
-// DateToTime date to time
-func DateToTime(format, date string) (time.Time, error) {
-	return time.ParseInLocation(format, date, time.Local)
-}
-
 // TimestampToDate timestamp to date
 func TimestampToDate(u int64, format string) string {
 	return time.Unix(u, 0).Format(format)
 }
 
-// FormatSecond to YmdHms
-func FormatSecond(t time.Time) string {
-	return t.Format(YmdHms)
+// DateToTime date to time
+func DateToTime(format, date string) (time.Time, error) {
+	return time.ParseInLocation(format, date, time.Local)
 }
 
 // FormatRFC3339 to RFC3339

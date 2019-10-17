@@ -1,6 +1,10 @@
-# go-error
+# go-http
 
-base on github.com/pkg/errors
+base on github.com/coreos/etcd/clientv3
+
+## config
+
+see ./config.go
 
 ## dev environment
 

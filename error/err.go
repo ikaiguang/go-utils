@@ -2,16 +2,18 @@ package goerror
 
 import (
 	"fmt"
+	"github.com/pkg/errors"
 	"io"
 )
 
 // status code
 const (
-	OK = 0
+	OK      = 0  // status ok
+	Unknown = -1 // status unknown
 )
 
-// Err returns an error from Status
-func Err(code int32, message string) error {
+// New returns an error from Status
+func New(code int32, message string) error {
 	return &Status{
 		Code:    code,
 		Message: message,
@@ -19,8 +21,8 @@ func Err(code int32, message string) error {
 	}
 }
 
-// Errf returns an error from Status
-func Errf(code int32, format string, args ...interface{}) error {
+// Newf returns an error from Status
+func Newf(code int32, format string, args ...interface{}) error {
 	return &Status{
 		Code:    code,
 		Message: fmt.Sprintf(format, args...),
@@ -28,25 +30,26 @@ func Errf(code int32, format string, args ...interface{}) error {
 	}
 }
 
-// FromErr returns a Status representing err if it was produced from this package.
-// Otherwise, ok is false and a Status is returned with code(0) and the original error message.
-func FromErr(err error) (s *Status, ok bool) {
+// FromError returns a Status representing err if it was produced from this package.
+// Otherwise, ok is false and a Status is returned with code(Unknown) and the original error message.
+func FromError(err error) (s *Status, ok bool) {
 	if err == nil {
-		return &Status{Code: OK, Message: err.Error(), stack: callers()}, true
+		return &Status{Code: OK, Message: "", stack: callers()}, true
 	}
-	if s, ok := Cause(err).(*Status); ok {
+	if s, ok := errors.Cause(err).(*Status); ok {
 		return s, true
 	}
-	return &Status{Code: OK, Message: err.Error(), stack: callers()}, false
+	return &Status{Code: Unknown, Message: err.Error(), stack: callers()}, false
 }
 
-// Status error
+// Status implements error
 type Status struct {
 	Code    int32  `json:"code"`    // code
 	Message string `json:"message"` // message
 	*stack  `json:"-"`              // stack
 }
 
+// Error implements error
 func (s *Status) Error() string {
 	return fmt.Sprintf("go error: code = %d desc = %s", s.Code, s.Message)
 }

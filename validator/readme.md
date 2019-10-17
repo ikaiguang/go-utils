@@ -1,6 +1,6 @@
-# go-error
+# go-validator
 
-base on github.com/pkg/errors
+validator utils
 
 ## dev environment
 

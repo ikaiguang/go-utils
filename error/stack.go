@@ -6,21 +6,16 @@ import (
 	"path"
 	"runtime"
 	"strings"
-	"sync"
 )
 
 // default
 var (
-	maxRuntimeCaller      int        // custom runtime callers
-	maxRuntimeCallerMutex sync.Mutex // lock
+	maxCallers = 2 // custom runtime callers
 )
 
 // SetMaxCallers set runtime.callers pc
 func SetMaxCallers(callers int) {
-	maxRuntimeCallerMutex.Lock()
-	defer maxRuntimeCallerMutex.Unlock()
-
-	maxRuntimeCaller = callers
+	maxCallers = callers
 }
 
 func callers() *stack {
@@ -28,8 +23,8 @@ func callers() *stack {
 	var pcs [depth]uintptr
 	n := runtime.Callers(3, pcs[:])
 	// max callers
-	if maxRuntimeCaller > 0 && n > maxRuntimeCaller {
-		n = maxRuntimeCaller
+	if maxCallers > 0 && n > maxCallers {
+		n = maxCallers
 	}
 	var st stack = pcs[0:n]
 	return &st

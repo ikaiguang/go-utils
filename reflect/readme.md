@@ -1,6 +1,6 @@
-# go-error
+# go-reflect
 
-base on github.com/pkg/errors
+reflect utils
 
 ## dev environment
 

@@ -1,6 +1,10 @@
-# go-error
+# go-redis
 
-base on github.com/pkg/errors
+base on github.com/go-redis/redis
+
+## config
+
+see ./config.go
 
 ## dev environment
 

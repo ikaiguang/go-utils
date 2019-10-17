@@ -1,6 +1,10 @@
-# go-error
+# go-grpc
 
-base on github.com/pkg/errors
+base on github.com/grpc/grpc-go
+
+## config
+
+see ./config.go
 
 ## dev environment
 

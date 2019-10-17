@@ -1,6 +1,6 @@
-# go-error
+# go-string
 
-base on github.com/pkg/errors
+string utils
 
 ## dev environment
 

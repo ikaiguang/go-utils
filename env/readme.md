@@ -1,6 +1,6 @@
-# go-error
+# go-env
 
-base on github.com/pkg/errors
+env utils
 
 ## dev environment
 

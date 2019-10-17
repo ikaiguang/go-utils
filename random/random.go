@@ -60,14 +60,13 @@ func Numeric(size int) string {
 	res := make([]byte, size)
 
 	for i := 0; i < size; i++ {
-
 		res[i] = byte(rand.Intn(9) + 48)
 	}
 	return string(res)
 }
 
-// BetweenNumeric random number between min-max
-func BetweenNumeric(min, max int64) int64 {
+// NumericBetween random number between min-max
+func NumericBetween(min, max int64) int64 {
 	if min == max {
 		return min
 	}

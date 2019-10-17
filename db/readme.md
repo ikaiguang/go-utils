@@ -1,6 +1,10 @@
-# go-error
+# go-db
 
-base on github.com/pkg/errors
+base on github.com/jinzhu/gorm
+
+## config
+
+see ./config/config.go
 
 ## dev environment
 

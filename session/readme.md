@@ -1,6 +1,6 @@
-# go-error
+# go-session
 
-base on github.com/pkg/errors
+session utils
 
 ## dev environment
 

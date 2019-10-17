@@ -1,6 +1,6 @@
-# go-error
+# go-sort
 
-base on github.com/pkg/errors
+sort utils
 
 ## dev environment
 

@@ -1,6 +1,6 @@
-# go-error
+# go-time
 
-base on github.com/pkg/errors
+time utils
 
 ## dev environment
 

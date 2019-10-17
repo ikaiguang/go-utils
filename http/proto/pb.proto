@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "pb";
+
+import "google/protobuf/any.proto";
+
+/**
+ *
+ * @apiDefine pb_json pb_json
+ *
+ * @apiParam (pb_json) {int32} code status code
+ * @apiParam (pb_json) {string} message message
+ *
+ * @apiParam (pb_json) {google.protobuf.Any} data data
+ *
+ */
+
+// pb_json resp with google/protobuf/any.proto
+message pb_json {
+    int32 code = 1; // code
+    string message = 2; // message
+
+    google.protobuf.Any data = 3; // data
+}

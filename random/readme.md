@@ -1,6 +1,6 @@
-# go-error
+# go-random
 
-base on github.com/pkg/errors
+random utils
 
 ## dev environment
 
