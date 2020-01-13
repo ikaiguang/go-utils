@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package pb;
+package gopb;
 
-option go_package = "pb";
+option go_package = "gopb";
 
 import "google/protobuf/any.proto";
 
@@ -21,6 +21,7 @@ import "google/protobuf/any.proto";
 message pb_json {
     int32 code = 1; // code
     string message = 2; // message
+    string secret = 3; // message
 
-    google.protobuf.Any data = 3; // data
+    google.protobuf.Any data = 4; // data
 }
