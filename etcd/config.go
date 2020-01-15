@@ -17,7 +17,7 @@ const (
 
 // etcd env
 const (
-	EnvKeyETCDEndPoints            = "AppETCDEndpoints"                // endpoints
+	EnvKeyETCDEndPoints            = "AppETCDEndpoints"                // endpoints:host:post,host:post
 	EnvKeyETCDUsername             = "AppETCDUsername"                 // username
 	EnvKeyETCDPassword             = "AppETCDPassword"                 // password
 	EnvKeyETCDDialTimeout          = "AppETCDDialTimeout"              // timeout
@@ -28,6 +28,20 @@ const (
 	EnvKeyETCDMaxCallRecvMsgSize   = "AppETCDMaxCallRecvMsgSize"       // If 0, it defaults to "math.MaxInt32"
 	EnvKeyETCDRejectOldCluster     = "AppETCDRejectOldCluster"         // when set will refuse to create a client against an outdated cluster.
 )
+
+// Config config
+type Config struct {
+	Endpoints            []string      `yaml:"endpoints"`               // os.Setenv(EnvKeyETCDEndPoints, "127.0.0.1:2379,localhost:2379")
+	Username             string        `yaml:"username"`                // os.Setenv(AppETCDUsername, "")
+	Password             string        `yaml:"password"`                // os.Setenv(AppETCDPassword, "")
+	DialTimeout          time.Duration `yaml:"dial_timeout"`            // os.Setenv(AppETCDDialTimeout, "3s")
+	DialKeepAliveTime    time.Duration `yaml:"dial_keep_alive_time"`    // os.Setenv(AppETCDDialKeepAliveTime, "0s")
+	DialKeepAliveTimeout time.Duration `yaml:"dial_keep_alive_timeout"` // os.Setenv(AppETCDDialKeepAliveTimeTimeout, "0s")
+	AutoSyncInterval     time.Duration `yaml:"auto_sync_interval"`      // os.Setenv(AppETCDAutoSyncInterval, "0s")
+	MaxCallSendMsgSize   int           `yaml:"max_call_send_msg_size"`  // os.Setenv(AppETCDMaxCallSendMsgSize, "0")
+	MaxCallRecvMsgSize   int           `yaml:"max_call_recv_msg_size"`  // os.Setenv(AppETCDMaxCallRecvMsgSize, "0")
+	RejectOldCluster     bool          `yaml:"reject_old_cluster"`      // os.Setenv(AppETCDRejectOldCluster, "0")
+}
 
 // InitConfig init config
 var InitConfig = func() *clientv3.Config {
@@ -123,4 +137,32 @@ var SetTLS = func(cfg *clientv3.Config) {
 // AppendDialOptions config tls
 var AppendDialOptions = func(cfg *clientv3.Config) {
 	//cfg.DialOptions = append(cfg.DialOptions, []grpc.DialOption{}...)
+}
+
+// InitConfigFromCustom init config
+var InitConfigFromCustom = func(custom *Config) *clientv3.Config {
+	// config
+	var cfg = &clientv3.Config{
+		Endpoints:            custom.Endpoints,
+		Username:             custom.Username,
+		Password:             custom.Password,
+		DialTimeout:          custom.DialTimeout,
+		DialKeepAliveTime:    custom.DialKeepAliveTime,
+		DialKeepAliveTimeout: custom.DialKeepAliveTimeout,
+		AutoSyncInterval:     custom.AutoSyncInterval,
+		MaxCallSendMsgSize:   custom.MaxCallSendMsgSize,
+		MaxCallRecvMsgSize:   custom.MaxCallRecvMsgSize,
+		RejectOldCluster:     custom.RejectOldCluster,
+	}
+
+	// context
+	SetContext(cfg)
+
+	// tls
+	SetTLS(cfg)
+
+	// dial options
+	AppendDialOptions(cfg)
+
+	return cfg
 }

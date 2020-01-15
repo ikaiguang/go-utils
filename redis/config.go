@@ -29,6 +29,25 @@ const (
 	EnvKeyRedisMaxRetryBackoff    = "AppRedisMaxRetryBackoff"    // max retry
 )
 
+// Config cfg
+type Config struct {
+	Endpoint           string        `yaml:"endpoint"`             // host:port address.
+	Password           string        `yaml:"password"`             // password
+	DB                 int           `yaml:"db"`                   // db
+	PoolSize           int           `yaml:"pool_size"`            // pool size
+	MinIdleConns       int           `yaml:"min_idle_conns"`       // min idle
+	MaxConnAge         time.Duration `yaml:"max_conn_age"`         // lifetime
+	DialTimeout        time.Duration `yaml:"dial_timeout"`         // dial timeout
+	ReadTimeout        time.Duration `yaml:"read_timeout"`         // read timeout
+	WriteTimeout       time.Duration `yaml:"write_timeout"`        // write timeout
+	PoolTimeout        time.Duration `yaml:"pool_timeout"`         // pool timeout
+	IdleTimeout        time.Duration `yaml:"idle_timeout"`         // idle timeout
+	IdleCheckFrequency time.Duration `yaml:"idle_check_frequency"` // idle check frequency
+	MaxRetries         int           `yaml:"max_retries"`          // retry
+	MinRetryBackoff    time.Duration `yaml:"min_retry_backoff"`    // min retry
+	MaxRetryBackoff    time.Duration `yaml:"max_retry_backoff"`    // max retry
+}
+
 // InitConfig init config
 var InitConfig = func() *redis.Options {
 	var opt = &redis.Options{

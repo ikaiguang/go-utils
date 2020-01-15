@@ -39,7 +39,7 @@ func PbJSON(data proto.Message) (*gopb.PbJson, error) {
 	return &gopb.PbJson{
 		Code:    gopb.SuccessCode,
 		Message: gopb.SuccessMsg,
-		Secret:  gopb.SuccessSecret,
+		Cause:   gopb.SuccessCause,
 		Data:    anyData,
 	}, nil
 }

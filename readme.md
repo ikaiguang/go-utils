@@ -33,6 +33,6 @@ go test -v ./xxx/
 - [x] session 初始化
 - [x] gin & grpc 中间件 : jwt
 - [x] 日志
-- [ ] 使用 json & yaml 配置 全局配置
+- [x] 使用 yaml 配置 全局配置
 - [ ] grpc 的 balancer, 参考 etcd 
 - [ ] grpc 客户端 连接池, 参考 db.pool redis.pool

@@ -1,9 +1,9 @@
 package godb
 
 import (
-	"github.com/ikaiguang/go-utils/db/config"
-	"github.com/ikaiguang/go-utils/db/mysql"
-	"github.com/ikaiguang/go-utils/db/postgres"
+	godbconfigs "github.com/ikaiguang/go-utils/db/config"
+	godbmysql "github.com/ikaiguang/go-utils/db/mysql"
+	godbpostgres "github.com/ikaiguang/go-utils/db/postgres"
 	"github.com/jinzhu/gorm"
 	"github.com/pkg/errors"
 	"strings"
@@ -42,7 +42,7 @@ func GetDBPool() (*gorm.DB, error) {
 }
 
 // GetDBPoolWithConfig db pool
-func GetDBPoolWithConfig(cfg *configs.Config) (*gorm.DB, error) {
+func GetDBPoolWithConfig(cfg *godbconfigs.Config) (*gorm.DB, error) {
 	if dbPool != nil {
 		return dbPool, nil
 	}
@@ -56,26 +56,26 @@ func GetDBPoolWithConfig(cfg *configs.Config) (*gorm.DB, error) {
 
 // NewDBConn : db conn
 var NewDBConn = func() (*gorm.DB, error) {
-	return newDBConn(configs.InitConfig())
+	return newDBConn(godbconfigs.InitConfig())
 }
 
 // NewDBConnWithConfig db conn
-func NewDBConnWithConfig(cfg *configs.Config) (*gorm.DB, error) {
+func NewDBConnWithConfig(cfg *godbconfigs.Config) (*gorm.DB, error) {
 	return newDBConn(cfg)
 }
 
 // newDBConn : db conn
-func newDBConn(cfg *configs.Config) (*gorm.DB, error) {
+func newDBConn(cfg *godbconfigs.Config) (*gorm.DB, error) {
 	var dbConn *gorm.DB
 	var err error
 
 	// open db connection
 	switch cfg.Driver {
 	case DbDriverMysql: // mysql
-		dbConn, err = mysql.NewDBConn(cfg)
+		dbConn, err = godbmysql.NewDBConn(cfg)
 
 	case DbDriverPostgres: // postgres
-		dbConn, err = postgres.NewDBConn(cfg)
+		dbConn, err = godbpostgres.NewDBConn(cfg)
 
 	default: // invalid database driver
 		return nil, errors.New("invalid database driver")
@@ -125,7 +125,7 @@ var SetConnOptions = func(dbConn *gorm.DB) (*gorm.DB, error) { return dbConn, ni
 // Expired connections may be closed lazily before reuse.
 //
 // If d <= 0, connections are reused forever.
-func SetConnMaxLifetime(dbConn *gorm.DB, cfg *configs.Config) {
+func SetConnMaxLifetime(dbConn *gorm.DB, cfg *godbconfigs.Config) {
 	if cfg.MaxLifetime <= 0 {
 		return
 	}
@@ -143,7 +143,7 @@ func SetConnMaxLifetime(dbConn *gorm.DB, cfg *configs.Config) {
 //
 // The default max idle connections is currently 2. This may change in
 // a future release.
-func SetMaxIdleConn(dbConn *gorm.DB, cfg *configs.Config) {
+func SetMaxIdleConn(dbConn *gorm.DB, cfg *godbconfigs.Config) {
 	if cfg.MaxIdle <= 0 {
 		return
 	}
@@ -159,7 +159,7 @@ func SetMaxIdleConn(dbConn *gorm.DB, cfg *configs.Config) {
 //
 // If n <= 0, then there is no limit on the number of open connections.
 // The default is 0 (unlimited).
-func SetMaxOpenConn(dbConn *gorm.DB, cfg *configs.Config) {
+func SetMaxOpenConn(dbConn *gorm.DB, cfg *godbconfigs.Config) {
 	if cfg.MaxOpen <= 0 {
 		return
 	}
@@ -169,12 +169,12 @@ func SetMaxOpenConn(dbConn *gorm.DB, cfg *configs.Config) {
 // SetDebug : print debug
 // LogMode set log mode, `true` for detailed logs, `false` for no log,
 // default, will only print error logs
-func SetDebug(dbConn *gorm.DB, cfg *configs.Config) *gorm.DB {
+func SetDebug(dbConn *gorm.DB, cfg *godbconfigs.Config) *gorm.DB {
 	return dbConn.LogMode(cfg.Debug)
 }
 
 // SetTablePrefix : set table prefix
-var SetTablePrefix = func(cfg *configs.Config) {
+var SetTablePrefix = func(cfg *godbconfigs.Config) {
 	tablePrefix = cfg.TablePrefix
 	// rewrite handler
 	gorm.DefaultTableNameHandler = func(db *gorm.DB, tableName string) string {

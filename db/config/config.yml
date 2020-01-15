@@ -1,0 +1,15 @@
+godb:
+  driver: "mysql"
+  endpoints:
+    - "127.0.0.1:3306"
+    - "localhost:3306"
+  db_name: "test"
+  set_table_prefix: true
+  table_prefix: "ag_"
+  user: "root"
+  password: "Mysql.123456"
+  parameters: "charset=utf8&timeout=60s&loc=Local&autocommit=true"
+  debug: true
+  max_open: 10
+  max_idle: 10
+  max_lifetime: "30s"

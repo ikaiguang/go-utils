@@ -1,16 +1,16 @@
-package mysql
+package godbmysql
 
 import (
 	_ "github.com/jinzhu/gorm/dialects/mysql" // driver
-	"strings"
 
-	"github.com/ikaiguang/go-utils/db/config"
+	godbconfigs "github.com/ikaiguang/go-utils/db/config"
 	"github.com/jinzhu/gorm"
 	"github.com/pkg/errors"
+	"strings"
 )
 
 // NewDBConn : db conn
-func NewDBConn(cfg *configs.Config) (*gorm.DB, error) {
+func NewDBConn(cfg *godbconfigs.Config) (*gorm.DB, error) {
 	// db connection
 	dbConn, err := gorm.Open("mysql", InitMysqlDsn(cfg))
 	if err != nil {
@@ -24,7 +24,7 @@ func NewDBConn(cfg *configs.Config) (*gorm.DB, error) {
 // dsn layout [username[:password]@][protocol[(address)]]/dbname[?param1=value1&...&paramN=valueN]
 //
 // github.com/go-sql-driver/mysql -> mysql.Config{}.FormatDSN()
-var InitMysqlDsn = func(cfg *configs.Config) string {
+var InitMysqlDsn = func(cfg *godbconfigs.Config) string {
 	var dsn string
 
 	// user
@@ -37,8 +37,8 @@ var InitMysqlDsn = func(cfg *configs.Config) string {
 	}
 
 	// address
-	if len(cfg.Address) > 0 {
-		dsn += "tcp(" + strings.Join(cfg.Address, ",") + ")"
+	if len(cfg.Endpoints) > 0 {
+		dsn += "tcp(" + strings.Join(cfg.Endpoints, ",") + ")"
 	}
 
 	// name

@@ -1,0 +1,12 @@
+golog:
+  mysql_enable: false
+  file_enable: true
+  file_rotation: true
+  file_name: "test.log"
+  file_opt_time_location: "Local"
+  file_opt_link_name: ""
+  file_opt_force_new_file: true
+  file_opt_max_age: "0"
+  file_opt_rotation_time: "0s"
+  file_opt_rotation_count: 0
+  file_opt_rotation_suffix: ".%Y_%m_%d-%H_%M_%S.log"

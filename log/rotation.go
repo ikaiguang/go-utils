@@ -27,7 +27,7 @@ var RotationHook = func(cfg *Config) (*lfshook.LfsHook, error) {
 
 	// time location
 	if cfg.FileOptTimeLocation != nil {
-		opts = append(opts, rotatelogs.WithLocation(cfg.FileOptTimeLocation))
+		opts = append(opts, rotatelogs.WithLocation(cfg.FileOptTimeLocation.TimeLocation()))
 	}
 
 	// link name

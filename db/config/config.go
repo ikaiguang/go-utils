@@ -1,4 +1,4 @@
-package configs
+package godbconfigs
 
 import (
 	"github.com/pkg/errors"
@@ -13,7 +13,7 @@ import (
 const (
 	// connection
 	EnvKeyDbDriver         = "AppDbDriver"         // driver
-	EnvKeyDbAddress        = "AppDbAddress"        // host:post,host:post
+	EnvKeyDbEndpoints      = "AppDbEndpoints"      // host:post,host:post
 	EnvKeyDbName           = "AppDbName"           // db name
 	EnvKeyDbSetTablePrefix = "AppDbHasTablePrefix" // prefix
 	EnvKeyDbTablePrefix    = "AppDbTablePrefix"    // prefix
@@ -31,9 +31,9 @@ const (
 // Config config
 type Config struct {
 	Driver         string   `yaml:"driver"`           // os.Setenv(EnvKeyDbDriver, "mysql")
-	Address        []string `yaml:"address"`          // os.Setenv(EnvKeyDbAddress, "127.0.0.1:3306,127.0.0.1:13306")
+	Endpoints      []string `yaml:"endpoints"`        // os.Setenv(EnvKeyDbEndpoints, "127.0.0.1:3306,127.0.0.1:13306")
 	DBName         string   `yaml:"db_name"`          // os.Setenv(EnvKeyDbName, "test")
-	SetTablePrefix bool     `yaml:"has_table_prefix"` // os.Setenv(EnvKeyDbSetTablePrefix, "ag_")
+	SetTablePrefix bool     `yaml:"set_table_prefix"` // os.Setenv(EnvKeyDbSetTablePrefix, "true")
 	TablePrefix    string   `yaml:"table_prefix"`     // os.Setenv(EnvKeyDbTablePrefix, "ag_")
 	Username       string   `yaml:"user"`             // os.Setenv(EnvKeyDbUser, "username")
 	Password       string   `yaml:"password"`         // os.Setenv(EnvKeyDbPassword, "password")
@@ -60,7 +60,7 @@ var InitConfig = func() *Config {
 		Driver:      strings.TrimSpace(os.Getenv(EnvKeyDbDriver)),
 		Username:    strings.TrimSpace(os.Getenv(EnvKeyDbUser)),
 		Password:    strings.TrimSpace(os.Getenv(EnvKeyDbPassword)),
-		Address:     strings.Split(strings.TrimSpace(os.Getenv(EnvKeyDbAddress)), ","),
+		Endpoints:   strings.Split(strings.TrimSpace(os.Getenv(EnvKeyDbEndpoints)), ","),
 		DBName:      strings.TrimSpace(os.Getenv(EnvKeyDbName)),
 		Parameters:  strings.TrimSpace(os.Getenv(EnvKeyDbParameters)),
 		TablePrefix: strings.TrimSpace(os.Getenv(EnvKeyDbTablePrefix)),

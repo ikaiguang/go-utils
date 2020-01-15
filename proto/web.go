@@ -6,16 +6,16 @@ import (
 
 // response
 const (
-	SuccessCode   = 0         // code
-	SuccessMsg    = "success" // msg
-	SuccessSecret = "success" // secret
+	SuccessCode  = 0         // code
+	SuccessMsg   = "success" // msg
+	SuccessCause = "success" // cause
 )
 
 // WebJSON : web json
 type WebJSON struct {
 	Code    int32       `protobuf:"varint,1,opt,name=code" json:"code,omitempty"`
 	Message string      `protobuf:"bytes,2,opt,name=message" json:"message,omitempty"`
-	Secret  string      `protobuf:"bytes,2,opt,name=secret" json:"secret,omitempty"`
+	Cause   string      `protobuf:"bytes,2,opt,name=cause" json:"cause,omitempty"`
 	Data    interface{} `protobuf:"bytes,3,opt,name=data" json:"data,omitempty"`
 }
 

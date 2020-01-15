@@ -1,16 +1,16 @@
-package postgres
+package godbpostgres
 
 import (
 	_ "github.com/jinzhu/gorm/dialects/postgres" // driver
-	"strings"
 
-	"github.com/ikaiguang/go-utils/db/config"
+	godbconfigs "github.com/ikaiguang/go-utils/db/config"
 	"github.com/jinzhu/gorm"
 	"github.com/pkg/errors"
+	"strings"
 )
 
 // NewDBConn : db conn
-func NewDBConn(cfg *configs.Config) (*gorm.DB, error) {
+func NewDBConn(cfg *godbconfigs.Config) (*gorm.DB, error) {
 	// db connection
 	dbConn, err := gorm.Open("postgres", InitPostgresDsn(cfg))
 	if err != nil {
@@ -26,7 +26,7 @@ func NewDBConn(cfg *configs.Config) (*gorm.DB, error) {
 // dsn layout host=myhost port=myport user=postgres dbname=postgres password=mypassword
 //
 // https://www.postgresql.org/docs/11/libpq-connect.html#LIBPQ-CONNSTRING
-var InitPostgresDsn = func(cfg *configs.Config) string {
+var InitPostgresDsn = func(cfg *godbconfigs.Config) string {
 	var dsn = "postgresql://"
 
 	// user
@@ -39,7 +39,7 @@ var InitPostgresDsn = func(cfg *configs.Config) string {
 	}
 
 	// address
-	dsn += strings.Join(cfg.Address, ",")
+	dsn += strings.Join(cfg.Endpoints, ",")
 
 	// name
 	if len(cfg.DBName) > 0 {

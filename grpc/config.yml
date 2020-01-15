@@ -1,0 +1,11 @@
+gogrpc:
+  server_address: ":9999"
+  server_mode: "release"
+  ssl_enable: true
+  ssl_server_name: "uufff.com"
+  ssl_server_key: "testdata/cert/server.key"
+  ssl_server_crt: "testdata/cert/server.crt"
+  ssl_client_crt: "testdata/cert/client.crt"
+  reg_address: "127.0.0.1:9999"
+  reg_domain: "http://uufff.com"
+  oss_domain: "http://uufff.com/attachment"

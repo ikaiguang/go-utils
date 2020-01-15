@@ -1,0 +1,13 @@
+goetcd:
+  endpoints:
+    - "127.0.0.1:2379"
+    - "localhost:2379"
+  username: "root"
+  password: "Mysql.123456"
+  dial_timeout: "3s"
+  dial_keep_alive_time: "0s"
+  dial_keep_alive_timeout: "0s"
+  auto_sync_interval: "0s"
+  max_call_send_msg_size: 0
+  max_call_recv_msg_size: 0
+  reject_old_cluster: false

@@ -21,7 +21,7 @@ import "google/protobuf/any.proto";
 message pb_json {
     int32 code = 1; // code
     string message = 2; // message
-    string secret = 3; // message
+    string cause = 3; // cause
 
     google.protobuf.Any data = 4; // data
 }

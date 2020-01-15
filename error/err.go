@@ -8,8 +8,9 @@ import (
 
 // status code
 const (
-	OK      = 0  // status ok
-	Unknown = -1 // status unknown
+	OK       = 0 // status ok
+	Canceled = 1 // status cancel
+	Unknown  = 2 // status unknown
 )
 
 // New returns an error from Status
