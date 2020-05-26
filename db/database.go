@@ -9,50 +9,11 @@ import (
 	"strings"
 )
 
-// tablePrefix db table prefix
-var tablePrefix string
-
-// TablePrefix table prefix
-func TablePrefix() string {
-	return tablePrefix
-}
-
-// db
-var (
-	dbPool *gorm.DB // db conn
-)
-
 // database driver
 const (
 	DbDriverMysql    = "mysql"    // mysql
 	DbDriverPostgres = "postgres" // postgres
 )
-
-// GetDBPool db pool
-func GetDBPool() (*gorm.DB, error) {
-	if dbPool != nil {
-		return dbPool, nil
-	}
-	dbConn, err := NewDBConn()
-	if err != nil {
-		return dbConn, errors.WithStack(err)
-	}
-	dbPool = dbConn
-	return dbPool, nil
-}
-
-// GetDBPoolWithConfig db pool
-func GetDBPoolWithConfig(cfg *godbconfigs.Config) (*gorm.DB, error) {
-	if dbPool != nil {
-		return dbPool, nil
-	}
-	dbConn, err := NewDBConnWithConfig(cfg)
-	if err != nil {
-		return dbConn, errors.WithStack(err)
-	}
-	dbPool = dbConn
-	return dbPool, nil
-}
 
 // NewDBConn : db conn
 var NewDBConn = func() (*gorm.DB, error) {
@@ -175,12 +136,52 @@ func SetDebug(dbConn *gorm.DB, cfg *godbconfigs.Config) *gorm.DB {
 
 // SetTablePrefix : set table prefix
 var SetTablePrefix = func(cfg *godbconfigs.Config) {
-	tablePrefix = cfg.TablePrefix
+	//tablePrefix = cfg.TablePrefix
 	// rewrite handler
 	gorm.DefaultTableNameHandler = func(db *gorm.DB, tableName string) string {
-		if !strings.HasPrefix(tableName, tablePrefix) {
-			return tablePrefix + tableName
+		if !strings.HasPrefix(tableName, cfg.TablePrefix) {
+			return cfg.TablePrefix + tableName
 		}
 		return tableName
 	}
 }
+
+
+// tablePrefix db table prefix
+//var tablePrefix string
+
+// TablePrefix table prefix
+//func TablePrefix() string {
+//	return tablePrefix
+//}
+
+// db
+//var (
+//	dbPool *gorm.DB // db conn
+//)
+
+// GetDBPool db pool
+//func GetDBPool() (*gorm.DB, error) {
+//	if dbPool != nil {
+//		return dbPool, nil
+//	}
+//	dbConn, err := NewDBConn()
+//	if err != nil {
+//		return dbConn, errors.WithStack(err)
+//	}
+//	dbPool = dbConn
+//	return dbPool, nil
+//}
+
+// GetDBPoolWithConfig db pool
+//func GetDBPoolWithConfig(cfg *godbconfigs.Config) (*gorm.DB, error) {
+//	if dbPool != nil {
+//		return dbPool, nil
+//	}
+//	dbConn, err := NewDBConnWithConfig(cfg)
+//	if err != nil {
+//		return dbConn, errors.WithStack(err)
+//	}
+//	dbPool = dbConn
+//	return dbPool, nil
+//}
