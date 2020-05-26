@@ -13,9 +13,7 @@ func init() {
 	currentPath = filepath.Dir(currentFile)
 }
 
-// Path returns the absolute path the given relative file or directory path,
-// relative to the google.golang.org/grpc/testdata directory in the user's GOPATH.
-// If rel is already absolute, it is returned unmodified.
+// Path returns the absolute path the given relative file or directory path
 func Path(rel string) string {
 	if filepath.IsAbs(rel) {
 		return rel

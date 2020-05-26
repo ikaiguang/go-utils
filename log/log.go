@@ -4,7 +4,6 @@ import (
 	"github.com/pkg/errors"
 	"github.com/rifflock/lfshook"
 	"github.com/sirupsen/logrus"
-	"log"
 )
 
 // default
@@ -14,41 +13,26 @@ const (
 	defaultRotationMaxAge = -1                       // 100 years
 )
 
-// v log handler
-var logHandler *logrus.Logger
-
-// Log log handler
-func Log() *logrus.Logger {
-	if logHandler != nil {
-		return logHandler
-	}
-	logHandler = NewLog()
-
-	return logHandler
-}
-
-// LogWithConfig log handler
-func LogWithConfig(cfg *Config) *logrus.Logger {
-	if logHandler != nil {
-		return logHandler
-	}
-	logHandler = NewLogWithConfig(cfg)
-
-	return logHandler
-}
-
 // NewLog new log
-func NewLog() *logrus.Logger {
-	return newLog(InitConfig())
+func NewLog() (*logrus.Logger, error) {
+	handler, err := newLog(InitConfig())
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	return handler, nil
 }
 
 // NewLogWithConfig new log
-func NewLogWithConfig(cfg *Config) *logrus.Logger {
-	return newLog(cfg)
+func NewLogWithConfig(cfg *Config) (*logrus.Logger, error) {
+	handler, err := newLog(cfg)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	return handler, nil
 }
 
 // newLog new log
-func newLog(cfg *Config) *logrus.Logger {
+func newLog(cfg *Config) (*logrus.Logger, error) {
 
 	// handler
 	handler := logrus.New()
@@ -57,14 +41,14 @@ func newLog(cfg *Config) *logrus.Logger {
 
 	// file system
 	if err := RegisterFile(handler, cfg); err != nil {
-		log.Printf("%+v \n", errors.WithStack(err))
+		return nil, errors.WithStack(err)
 	}
 
 	// mysql
 	if err := RegisterMysql(handler, cfg); err != nil {
-		log.Printf("%+v \n", errors.WithStack(err))
+		return nil, errors.WithStack(err)
 	}
-	return handler
+	return handler, nil
 }
 
 // RegisterMysql register mysql hook
