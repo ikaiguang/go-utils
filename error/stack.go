@@ -10,7 +10,7 @@ import (
 
 // default
 var (
-	maxCallers = 2 // custom runtime callers
+	maxCallers = 1 // custom runtime callers
 )
 
 // SetMaxCallers set runtime.callers pc
