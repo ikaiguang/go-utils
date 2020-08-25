@@ -1,7 +1,6 @@
 package golog
 
 import (
-	gotime "github.com/ikaiguang/go-utils/time"
 	"github.com/pkg/errors"
 	"log"
 	"os"
@@ -28,17 +27,17 @@ const (
 
 // Config config
 type Config struct {
-	MysqlEnable           bool             `yaml:"mysql_enable"`             // mysql
-	FileEnable            bool             `yaml:"file_enable"`              // file system
-	FileRotation          bool             `yaml:"file_rotation"`            // file rotation
-	FileName              string           `yaml:"file_name"`                // filename
-	FileOptTimeLocation   *gotime.Location `yaml:"file_opt_time_location"`   // default local (default: rotatelogs.Local)
-	FileOptLinkName       string           `yaml:"file_opt_link_name"`       // link name (default: "")
-	FileOptForceNewFile   bool             `yaml:"file_opt_force_new_file"`  // force new file (default: false)
-	FileOptMaxAge         time.Duration    `yaml:"file_opt_max_age"`         // lifetime (default: 7 days)
-	FileOptRotationTime   time.Duration    `yaml:"file_opt_rotation_time"`   // rotation time(default: 86400 sec)
-	FileOptRotationCount  uint             `yaml:"file_opt_rotation_count"`  // rotation count (default: -1)
-	FileOptRotationSuffix string           `yaml:"file_opt_rotation_suffix"` // rotation suffix(example:path+".%Y_%m_%d-%H_%M_%S.log")
+	MysqlEnable           bool           `yaml:"mysql_enable"`             // mysql
+	FileEnable            bool           `yaml:"file_enable"`              // file system
+	FileRotation          bool           `yaml:"file_rotation"`            // file rotation
+	FileName              string         `yaml:"file_name"`                // filename
+	FileOptTimeLocation   *time.Location `yaml:"file_opt_time_location"`   // default local (default: rotatelogs.Local)
+	FileOptLinkName       string         `yaml:"file_opt_link_name"`       // link name (default: "")
+	FileOptForceNewFile   bool           `yaml:"file_opt_force_new_file"`  // force new file (default: false)
+	FileOptMaxAge         time.Duration  `yaml:"file_opt_max_age"`         // lifetime (default: 7 days)
+	FileOptRotationTime   time.Duration  `yaml:"file_opt_rotation_time"`   // rotation time(default: 86400 sec)
+	FileOptRotationCount  uint           `yaml:"file_opt_rotation_count"`  // rotation count (default: -1)
+	FileOptRotationSuffix string         `yaml:"file_opt_rotation_suffix"` // rotation suffix(example:path+".%Y_%m_%d-%H_%M_%S.log")
 }
 
 // InitConfig init config
@@ -82,7 +81,7 @@ var InitConfig = func() *Config {
 		if err != nil {
 			log.Printf("%+v \n", errors.WithMessage(err, "time.LoadLocation(EnvKeyLogFileOptTimeLocation) fail"))
 		}
-		cfg.FileOptTimeLocation = gotime.ToLocation(location)
+		cfg.FileOptTimeLocation = location
 	}
 
 	// force new file
